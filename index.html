@@ -1,13 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
-    <title>O-SCOPE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+  <title>O-SCOPE</title>
+  <link rel="stylesheet" href="/static/index.css">
 </head>
 <body>
 
-    <h1>O-SCOPE</h1>
-
+<header>
+  <div class="status" id="status">
+    <button id="connectBtn"><b>CONNECT</b></button> &nbsp;&nbsp;
+    <b>O-SCOPE</b> &nbsp;&nbsp;
+    <button id="stoprun"><b>STOP/RUN</b></button>
+    <button id="saveBtn"><b>SAVE DATA</b></button>
+  </div>
+</header>  
+  <div class="grid-container">
+    <!---->
+    <div class="grid-itemb">
+    </div>
+    <div class="grid-item">
+      <div class="txt-sps"><b>CHAN0</b></div>
+      &nbsp;      
+      <div class="txt-sps" id="s0">max=0.00V min=0.00V avg=0.00V div=0.0000ms</div>
+      <canvas class="sigcanvas" id="osc0"></canvas>
+      <div class="txt-sps" id="trig0">T=1.65V</div>      
+      <div class="txt-sps" id="cursor0-value">A=0.0000ms 0.00V</div>
+      <div class="txt-sps" id="cursor0b-value">B=0.0000ms 0.00V</div>
+      <div class="txt-sps" id="cursor0delta">&#916;BA=0.0000ms 0.00V</div>                
+    </div>    
+    <div class="grid-item">
+      <div class="txt-sps"><b>FFT0</b></div>
+      <div class="txt-sps" id="f0">F*=0Hz div=0Hz</div>            
+      <canvas class="sigcanvas" id="fft0"></canvas>
+      <div class="txt-sps" id="cfft0-value">F=0Hz FFT=0.00</div>      
+    </div>    
+    <div class="grid-item">
+      <div class="txt-sps"><b>TRIGGER0</b></div>   
+      <br>                                  
+      <input type="radio" name="bgsource0" id="bgsource0a" value="0" style="accent-color: #3D3C3A;" checked>&nbsp;<label for="bgsource0a" style="display:inline-block;width:33%;">CHAN-0</label>
+      <input type="radio" name="bgsource0" id="bgsource0b" value="1" style="accent-color: #3D3C3A;">&nbsp;<label for="bgsource0b" style="display:inline-block;">CHAN-1</label>
+      <br>       
+      <input type="radio" name="bgcond0" id="bgcond0a" value="rising" style="accent-color: #3D3C3A;" checked>&nbsp;<label for="bgcond0a" style="display:inline-block;width:33%;">RISING</label>
+      <input type="radio" name="bgcond0" id="bgcond0b" value="falling" style="accent-color: #3D3C3A;">&nbsp;<label for="bgcond0b" style="display:inline-block;">FALLING</label>
+      <br>       
+      <input type="radio" name="bgmode0" id="bgmode0a" value="auto" style="accent-color: #3D3C3A;" checked>&nbsp;<label for="bgmode0a" style="display:inline-block;width:33%;">AUTO</label>
+      <input type="radio" name="bgmode0" id="bgmode0b" value="single" style="accent-color: #3D3C3A;">&nbsp;<label for="bgmode0b" style="display:inline-block;">SINGLE</label>
+      <br>
+      <input type="radio" name="bgcoupling0" id="bgcoupling0a" value="DC" style="accent-color: #3D3C3A;" checked>&nbsp;<label for="bgcoupling0a" style="display:inline-block;width:33%;">DC</label>
+      <input type="radio" name="bgcoupling0" id="bgcoupling0b" value="AC" style="accent-color: #3D3C3A;">&nbsp;<label for="bgcoupling0b" style="display:inline-block;width:33%;">AC</label>                                    
+      <br><br>
+      <input type="range" id="tlevel0" min="0" max="100" value="50" class="slider" style="accent-color: #3D3C3A;">T
+      <br>
+      <input type="range" id="cursor0" min="0" max="2048" value="512" class="slider" style="accent-color: #3D3C3A;">A
+      <br>
+      <input type="range" id="cursor0b" min="0" max="2048" value="1536" class="slider" style="accent-color: #3D3C3A;">B
+      <br>
+      <input type="range" id="cfft0" min="0" max="1024" value="256" class="slider" style="accent-color: #3D3C3A;">F   
+      <br><br>
+      <button id="SPSm0"><b>-</b></button>
+      <button id="SPSp0"><b>+</b></button>    
+      <div class="txt-sps" id="rate0">SPS=150000</div>
+      <br>
+      <button id="BtnZm0"><b>-</b></button>
+      <button id="BtnZp0"><b>+</b></button>
+      <div class="txt-sps" id="zoom0">ZOOM=1</div>      
+    </div>
+    <div class="grid-itemb">
+    </div>        
+    <!---->
+    <div class="grid-itemb">
+    </div>    
+    <div class="grid-item">
+      <div class="txt-sps"><b>CHAN1</b></div>
+      &nbsp;            
+      <div class="txt-sps" id="s1">max=0.00V min=0.00V avg=0.00V div=0.0000ms</div>
+      <canvas class="sigcanvas" id="osc1"></canvas>    
+      <div class="txt-sps" id="trig1">T=1.65V</div>      
+      <div class="txt-sps" id="cursor1-value">A=0.0000ms 0.00V</div>  
+      <div class="txt-sps" id="cursor1b-value">B=0.0000ms 0.00V</div>       
+      <div class="txt-sps" id="cursor1delta">&#916;BA=0.0000ms 0.00V</div>                  
+    </div>
+    <div class="grid-item">
+      <div class="txt-sps"><b>FFT1 : </b></div>
+      <div class="txt-sps" id="f1">F*=0Hz div=0Hz</div>      
+      <canvas class="sigcanvas" id="fft1"></canvas>    
+      <div class="txt-sps" id="cfft1-value">F=0Hz FFT=0.00</div>            
+    </div>
+    <div class="grid-item">
+      <div class="txt-sps"><b>TRIGGER1</b></div>
+      <br>                                        
+      <input type="radio" name="bgsource1" id="bgsource1a" value="0" style="accent-color: #3D3C3A;" checked>&nbsp;<label for="bgsource1a" style="display:inline-block;width:33%;">CHAN-0</label>
+      <input type="radio" name="bgsource1" id="bgsource1b" value="1" style="accent-color: #3D3C3A;">&nbsp;<label for="bgsource1b" style="display:inline-block;">CHAN-1</label>
+      <br>       
+      <input type="radio" name="bgcond1" id="bgcond1a" value="rising" style="accent-color: #3D3C3A;" checked>&nbsp;<label for="bgcond1a" style="display:inline-block;width:33%;">RISING</label>
+      <input type="radio" name="bgcond1" id="bgcond1b" value="falling" style="accent-color: #3D3C3A;">&nbsp;<label for="bgcond1b" style="display:inline-block;">FALLING</label>
+      <br>       
+      <input type="radio" name="bgmode1" id="bgmode1a" value="auto" style="accent-color: #3D3C3A;" checked>&nbsp;<label for="bgmode1a" style="display:inline-block;width:33%;">AUTO</label>
+      <input type="radio" name="bgmode1" id="bgmode1b" value="single" style="accent-color: #3D3C3A;">&nbsp;<label for="bgmode1b" style="display:inline-block;">SINGLE</label>
+      <br>
+      <input type="radio" name="bgcoupling1" id="bgcoupling1a" value="DC" style="accent-color: #3D3C3A;" checked>&nbsp;<label for="bgcoupling1a" style="display:inline-block;width:33%;">DC</label>
+      <input type="radio" name="bgcoupling1" id="bgcoupling1b" value="AC" style="accent-color: #3D3C3A;">&nbsp;<label for="bgcoupling1b" style="display:inline-block;width:33%;">AC</label>                              
+      <br><br>
+      <input type="range" id="tlevel1" min="0" max="100" value="50" class="slider" style="accent-color: #3D3C3A;">T
+      <br>
+      <input type="range" id="cursor1" min="0" max="2048" value="512" class="slider" style="accent-color: #3D3C3A;">A      
+      <br>
+      <input type="range" id="cursor1b" min="0" max="2048" value="1536" class="slider" style="accent-color: #3D3C3A;">B
+      <br>
+      <input type="range" id="cfft1" min="0" max="1024" value="256" class="slider" style="accent-color: #3D3C3A">F
+      <br><br>
+      <button id="SPSm1"><b>-</b></button>
+      <button id="SPSp1"><b>+</b></button>                 
+      <div class="txt-sps" id="rate1">SPS=150000</div>     
+      <br>
+      <button id="BtnZm1"><b>-</b></button>
+      <button id="BtnZp1"><b>+</b></button>
+      <div class="txt-sps" id="zoom1">ZOOM=1</div>      
+    </div>
+    <div class="grid-itemb">
+    </div>
+  </div>    
+    <!---->
+  <div class="grid-container1">
+    <div class="grid-itemb">
+    </div>  
+    <div class="grid-item">
+      <div class="txt-sps"><b>WFG0</b></div>
+      <div class="txt-sps"><label for="awgf0">F(Hz)</label></div>          
+      <input type="number" id="awgf0" name="awgf0" size="7" min="18" max="250000" value="1000">      
+      <input type="radio" name="rampg0" value="none" style="accent-color: #3D3C3A;" checked>&nbsp;off
+      <input type="radio" name="rampg0" value="sine" style="accent-color: #3D3C3A;">&nbsp;sine
+      <input type="radio" name="rampg0" value="ramp" style="accent-color: #3D3C3A;">&nbsp;ramp
+      <input type="radio" name="rampg0" value="triangle" style="accent-color: #3D3C3A;">&nbsp;triangle      
+      <input type="radio" name="rampg0" value="pulse" style="accent-color: #3D3C3A;">&nbsp;pulse
+      <input type="radio" name="rampg0" value="square" style="accent-color: #3D3C3A;">&nbsp;square
+      <input type="radio" name="rampg0" value="rand" style="accent-color: #3D3C3A;">&nbsp;rand
+      <br>
+      <div class="txt-sps"><b>WFG1</b></div>
+      <div class="txt-sps"><label for="awgf1">F(Hz)</label></div>          
+      <input type="number" id="awgf1" name="awgf1" size="7" min="18" max="250000" value="1000">      
+      <input type="radio" name="rampg1" value="none" style="accent-color: #3D3C3A;" checked>&nbsp;off
+      <input type="radio" name="rampg1" value="sine" style="accent-color: #3D3C3A;">&nbsp;sine
+      <input type="radio" name="rampg1" value="ramp" style="accent-color: #3D3C3A;">&nbsp;ramp
+      <input type="radio" name="rampg1" value="triangle" style="accent-color: #3D3C3A;">&nbsp;triangle
+      <input type="radio" name="rampg1" value="pulse" style="accent-color: #3D3C3A;">&nbsp;pulse
+      <input type="radio" name="rampg1" value="square" style="accent-color: #3D3C3A;">&nbsp;square
+      <input type="radio" name="rampg1" value="rand" style="accent-color: #3D3C3A;">&nbsp;rand      
+    </div>   
+    <div class="grid-item">
+      <div class="txt-sps"><b>PWM0</b></div>
+      <div class="txt-sps"><label for="pwm-f0">F(Hz)</label></div>      
+      <input type="number" id="pwm-f0" name="pwm-nf0" min="8" max="250000" value="1000">
+      <div class="txt-sps"><label for="pwm-duty0">duty(&percnt;)</label></div>      
+      <input type="number" id="pwm-duty0" name="pwm-nduty0" min="0" max="100" value="0">            
+      <button id="btnpwm0"><b>SET</b></button>      
+      <br>      
+      <div class="txt-sps"><b>PWM1</b></div>
+      <div class="txt-sps"><label for="pwm-f1">F(Hz)</label></div>      
+      <input type="number" id="pwm-f1" name="pwm-nf1" min="8" max="250000" value="1000">
+      <div class="txt-sps"><label for="pwm-duty1">duty(&percnt;)</label></div>      
+      <input type="number" id="pwm-duty1" name="pwm-nduty1" min="0" max="100" value="0">      
+      <button id="btnpwm1"><b>SET</b></button>   
+    </div>
+    <div class="grid-itemb">
+    </div>    
+  </div>
+  <div style="text-align: center;"><small>© Unlimited Analytics Inc.</small></div>
+  <div style="text-align: center;"><small><a href="https://github.com/mandrecut" target="_blank" rel="noopener noreferrer">O-SCOPE on GitHub</a></small></div>
+  <script src="/static/index.min.js"></script>
 </body>
 </html>
-
